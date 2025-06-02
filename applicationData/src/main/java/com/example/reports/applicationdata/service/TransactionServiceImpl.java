@@ -1,6 +1,6 @@
 package com.example.reports.applicationdata.service;
 
-import com.example.reports.applicationdata.dao.GenericDao;
+import com.example.reports.applicationdata.dao.impl.GenericDao;
 import com.example.reports.applicationdata.model.Transaction;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

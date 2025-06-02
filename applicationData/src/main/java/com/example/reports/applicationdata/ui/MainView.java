@@ -11,9 +11,6 @@ import com.vaadin.flow.server.PWA;
 import org.springframework.stereotype.Component;
 
 @Route("")
-@Component
-@Push
-@PWA(name = "Enterprise App", shortName = "Enterprise")
 public class MainView extends VerticalLayout {
 
     public MainView() {

@@ -7,6 +7,7 @@ import com.example.reports.applicationdata.service.GenericService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.SkipListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.builder.SimpleJobBuilder;
@@ -15,11 +16,14 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -69,15 +73,23 @@ public class TransactionBatchConfig {
     }
 
     @Bean
-    public Step transactionStep(JobRepository jobRepository, PlatformTransactionManager transactionManager,
-                                FlatFileItemReader<TransactionCsvRecord> reader,
-                                ItemProcessor<TransactionCsvRecord, Transaction> processor,
-                                JpaItemWriter<Transaction> writer) {
+    public Step transactionStep(
+            ItemReader<TransactionCsvRecord> reader,
+            ItemWriter<Transaction> writer,
+            @Qualifier("validatedTransactionProcessor") ItemProcessor<TransactionCsvRecord, Transaction> processor,
+            SkipListener<TransactionCsvRecord, Transaction> skipListener,
+            JobRepository jobRepository,
+            PlatformTransactionManager transactionManager) {
+
         return new StepBuilder("transactionStep", jobRepository)
                 .<TransactionCsvRecord, Transaction>chunk(100, transactionManager)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
+                .faultTolerant()
+                .skip(Exception.class)
+                .skipLimit(10)
+                .listener(skipListener)
                 .build();
     }
 
