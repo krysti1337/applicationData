@@ -18,7 +18,7 @@ public class MainView extends VerticalLayout {
         setPadding(true);
 
         add(new HorizontalLayout(
-                new RouterLink("Transactions", TransactionView.class),
+                new RouterLink("Transactions", TransactionGridView.class),
                 new RouterLink("Customers", CustomerView.class),
                 new RouterLink("Products", ProductView.class),
                 new RouterLink("Categories", CategoryView.class),
