@@ -44,4 +44,5 @@ public class TransactionView extends VerticalLayout {
                 .toList();
         grid.setItems(filtered);
     }
+
 }

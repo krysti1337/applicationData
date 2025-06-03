@@ -13,6 +13,7 @@ public class TransactionCsvRecord {
     private Long customerId;
     private String country;
 
+    // Getters and setters
     public String getInvoiceNo() { return invoiceNo; }
     public void setInvoiceNo(String invoiceNo) { this.invoiceNo = invoiceNo; }
     public String getStockCode() { return stockCode; }

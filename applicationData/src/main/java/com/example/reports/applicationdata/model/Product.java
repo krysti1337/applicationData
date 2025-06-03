@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,8 @@ public class Product {
     @Id
     private String stockCode;
     private String description;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal unitPrice;
 
     @ManyToMany
     @JoinTable(
