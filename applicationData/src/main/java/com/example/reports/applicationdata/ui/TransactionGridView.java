@@ -26,14 +26,11 @@ public class TransactionGridView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        transactionGrid.setColumns("invoiceNo", "quantity", "invoiceDate");
-        transactionGrid.addColumn(t -> t.getCustomer().getCustomerId()).setHeader("Customer ID");
-        transactionGrid.addColumn(t -> t.getCustomer().getCountry()).setHeader("Country");
-        transactionGrid.addColumn(t -> t.getProduct().getStockCode()).setHeader("Stock Code");
-        transactionGrid.addColumn(t -> t.getProduct().getDescription()).setHeader("Description");
-        transactionGrid.addColumn(t -> t.getProduct().getUnitPrice()).setHeader("Unit Price");
-
-        transactionGrid.setSizeFull();
+        transactionGrid.addColumn(t -> t.getCustomer() != null ? t.getCustomer().getCustomerId() : "").setHeader("Customer ID");
+        transactionGrid.addColumn(t -> t.getCustomer() != null ? t.getCustomer().getCountry() : "").setHeader("Country");
+        transactionGrid.addColumn(t -> t.getProduct() != null ? t.getProduct().getStockCode() : "").setHeader("Stock Code");
+        transactionGrid.addColumn(t -> t.getProduct() != null ? t.getProduct().getDescription() : "").setHeader("Description");
+        transactionGrid.addColumn(t -> t.getProduct() != null ? t.getProduct().getUnitPrice() : "").setHeader("Unit Price");
     }
 
     private void updateGrid() {

@@ -23,6 +23,10 @@ public class Customer {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Order> orders;
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<Order> orders;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
+
 }

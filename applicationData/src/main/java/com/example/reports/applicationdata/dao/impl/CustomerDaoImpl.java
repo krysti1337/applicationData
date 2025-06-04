@@ -29,7 +29,9 @@ public class CustomerDaoImpl implements GenericDao<Customer, Long>{
 
     @Override
     public List<Customer> findAll() {
-        return entityManager.createQuery("select c from Customer c", Customer.class).getResultList();
+        return entityManager.createQuery(
+                        "SELECT DISTINCT c FROM Customer c LEFT JOIN FETCH c.transactions", Customer.class)
+                .getResultList();
     }
 
     @Override

@@ -12,14 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ApplicationDataApplication implements CommandLineRunner {
 
-    private final JobLauncher jobLauncher;
-    private final Job transactionImportJob;
-
-    public ApplicationDataApplication(JobLauncher jobLauncher,
-                                      @Qualifier("transactionImportJob") Job transactionImportJob) {
-        this.jobLauncher = jobLauncher;
-        this.transactionImportJob = transactionImportJob;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(ApplicationDataApplication.class, args);
@@ -27,10 +19,5 @@ public class ApplicationDataApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        JobParameters parameters = new JobParametersBuilder()
-                .addLong("time", System.currentTimeMillis())
-                .toJobParameters();
-
-        jobLauncher.run(transactionImportJob, parameters);
     }
 }

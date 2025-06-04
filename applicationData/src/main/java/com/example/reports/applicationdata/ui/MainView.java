@@ -18,11 +18,12 @@ public class MainView extends VerticalLayout {
         setPadding(true);
 
         add(new HorizontalLayout(
+                new RouterLink("Import", CsvImportView.class),
                 new RouterLink("Transactions", TransactionGridView.class),
                 new RouterLink("Customers", CustomerView.class),
                 new RouterLink("Products", ProductView.class),
-                new RouterLink("Categories", CategoryView.class),
-                new RouterLink("Orders", OrderView.class),
+//                new RouterLink("Categories", CategoryView.class),
+//                new RouterLink("Orders", OrderView.class),
                 new RouterLink("Export", TransactionExportView.class)
         ));
     }

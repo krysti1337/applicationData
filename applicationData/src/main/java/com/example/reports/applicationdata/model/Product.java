@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,11 +22,14 @@ public class Product {
     @Column(precision = 10, scale = 2)
     private BigDecimal unitPrice;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_category",
-            joinColumns = @JoinColumn(name = "stock_code"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<Category> categories;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "product_category",
+//            joinColumns = @JoinColumn(name = "stock_code"),
+//            inverseJoinColumns = @JoinColumn(name = "category_id")
+//    )
+//    private Set<Category> categories;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 }

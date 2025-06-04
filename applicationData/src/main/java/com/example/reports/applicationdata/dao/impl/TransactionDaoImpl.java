@@ -29,7 +29,11 @@ public class TransactionDaoImpl implements GenericDao<Transaction, Long>{
 
     @Override
     public List<Transaction> findAll() {
-        return entityManager.createQuery("from Transaction", Transaction.class).getResultList();
+        return entityManager.createQuery(
+                        "SELECT t FROM Transaction t " +
+                                "JOIN FETCH t.customer " +
+                                "JOIN FETCH t.product", Transaction.class)
+                .getResultList();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.reports.applicationdata.batch;
 
 
 import com.example.reports.applicationdata.batch.TransactionCsvRecord;
+import com.example.reports.applicationdata.dao.impl.GenericDao;
 import com.example.reports.applicationdata.model.Customer;
 import com.example.reports.applicationdata.model.Product;
 import com.example.reports.applicationdata.model.Transaction;
@@ -17,6 +18,7 @@ import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -29,6 +31,11 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 @EnableBatchProcessing
 public class BatchConfig {
+    @Autowired
+    private GenericDao<Customer, Long> customerDao;
+
+    @Autowired
+    private GenericDao<Product, String> productDao;
 
     @Bean
     public FlatFileItemReader<TransactionCsvRecord> reader() {
@@ -92,17 +99,13 @@ public class BatchConfig {
             Transaction transaction = new Transaction();
             transaction.setInvoiceNo(record.getInvoiceNo());
             transaction.setQuantity(record.getQuantity());
+            transaction.setInvoiceDate(LocalDateTime.parse(record.getInvoiceDate(), DateTimeFormatter.ofPattern("M/d/yyyy H:mm")));
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy H:mm");
-            LocalDateTime invoiceDate = LocalDateTime.parse(record.getInvoiceDate(), formatter);
-            transaction.setInvoiceDate(invoiceDate);
+            // Gasim entitati salvate
+            Customer customer = customerDao.findById(Long.valueOf(record.getCustomerID()));
+            Product product = productDao.findById(record.getStockCode());
 
-            Customer customer = new Customer();
-            customer.setCustomerId(Long.parseLong(record.getCustomerID()));
             transaction.setCustomer(customer);
-
-            Product product = new Product();
-            product.setStockCode(record.getStockCode());
             transaction.setProduct(product);
 
             return transaction;

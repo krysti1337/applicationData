@@ -2,6 +2,7 @@ package com.example.reports.applicationdata.service;
 
 import com.example.reports.applicationdata.dao.impl.GenericDao;
 import com.example.reports.applicationdata.model.Transaction;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class TransactionServiceImpl implements GenericService<Transaction, Long> {
 
     private final GenericDao<Transaction, Long> transactionDao;
+
 
     public TransactionServiceImpl(GenericDao<Transaction, Long> transactionDao) {
         this.transactionDao = transactionDao;

@@ -29,7 +29,9 @@ public class ProductDaoImpl implements GenericDao<Product, String> {
 
     @Override
     public List<Product> findAll() {
-        return entityManager.createQuery("from Product", Product.class).getResultList();
+        return entityManager.createQuery(
+                        "SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.transactions", Product.class)
+                .getResultList();
     }
 
     @Override
