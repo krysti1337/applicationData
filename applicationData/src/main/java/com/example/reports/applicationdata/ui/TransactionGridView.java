@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Route("transactions")
+@Route("/transactions")
 public class TransactionGridView extends VerticalLayout {
 
     private final GenericService<Transaction, Long> transactionService;
-    private final Grid<Transaction> transactionGrid = new Grid<>(Transaction.class);
+    private final Grid<Transaction> transactionGrid = new Grid<>();
 
     @Autowired
     public TransactionGridView(GenericService<Transaction, Long> transactionService) {
@@ -26,11 +26,37 @@ public class TransactionGridView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        transactionGrid.addColumn(t -> t.getCustomer() != null ? t.getCustomer().getCustomerId() : "").setHeader("Customer ID");
-        transactionGrid.addColumn(t -> t.getCustomer() != null ? t.getCustomer().getCountry() : "").setHeader("Country");
-        transactionGrid.addColumn(t -> t.getProduct() != null ? t.getProduct().getStockCode() : "").setHeader("Stock Code");
-        transactionGrid.addColumn(t -> t.getProduct() != null ? t.getProduct().getDescription() : "").setHeader("Description");
-        transactionGrid.addColumn(t -> t.getProduct() != null ? t.getProduct().getUnitPrice() : "").setHeader("Unit Price");
+        transactionGrid.setSizeFull();
+
+        transactionGrid.addColumn(Transaction::getId).setHeader("Id");
+        transactionGrid.addColumn(t -> t.getInvoiceNo()).setHeader("Invoice No");
+        transactionGrid.addColumn(t -> t.getInvoiceDate().toString()).setHeader("Invoice Date");
+        transactionGrid.addColumn(t -> t.getQuantity()).setHeader("Quantity");
+
+        transactionGrid.addColumn(t -> {
+            if (t.getCustomer() != null) return t.getCustomer().getCustomerId();
+            return "";
+        }).setHeader("Customer ID");
+
+        transactionGrid.addColumn(t -> {
+            if (t.getCustomer() != null) return t.getCustomer().getCountry();
+            return "";
+        }).setHeader("Country");
+
+        transactionGrid.addColumn(t -> {
+            if (t.getProduct() != null) return t.getProduct().getStockCode();
+            return "";
+        }).setHeader("Stock Code");
+
+        transactionGrid.addColumn(t -> {
+            if (t.getProduct() != null) return t.getProduct().getDescription();
+            return "";
+        }).setHeader("Description");
+
+        transactionGrid.addColumn(t -> {
+            if (t.getProduct() != null) return t.getProduct().getUnitPrice();
+            return "";
+        }).setHeader("Product Unit Price");
     }
 
     private void updateGrid() {

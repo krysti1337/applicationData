@@ -1,49 +1,49 @@
 package com.example.reports.applicationdata.ui;
 
-import com.example.reports.applicationdata.model.Customer;
-import com.example.reports.applicationdata.model.Profile;
 import com.example.reports.applicationdata.model.Product;
-//import com.example.reports.applicationdata.model.Category;
 import com.example.reports.applicationdata.service.GenericService;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @Route("/products")
 @Component
 public class ProductView extends VerticalLayout {
 
     private final GenericService<Product, String> productService;
-//    private final GenericService<Category, Long> categoryService;
-    private final Grid<Product> grid = new Grid<>(Product.class);
+    private final Grid<Product> grid = new Grid<>(Product.class, false);
+
     private final TextField stockCodeField = new TextField("Stock Code");
     private final TextField descriptionField = new TextField("Description");
-//    private final MultiSelectComboBox<Category> categoryBox = new MultiSelectComboBox<>("Categories");
+    private final NumberField unitPriceField = new NumberField("Unit Price");
 
     @Autowired
     public ProductView(GenericService<Product, String> productService) {
         this.productService = productService;
-//        this.categoryService = categoryService;
 
         Button saveButton = new Button("Save", e -> saveProduct());
-        FormLayout form = new FormLayout();
-        form.add(stockCodeField, descriptionField, saveButton);
+        FormLayout form = new FormLayout(stockCodeField, descriptionField, unitPriceField, saveButton);
 
-//        categoryBox.setItems(categoryService.findAll());
-//        categoryBox.setItemLabelGenerator(Category::getName);
+        configureGrid();
 
         add(form, grid);
         loadAllProducts();
+    }
+
+    private void configureGrid() {
+        grid.addColumn(Product::getStockCode).setHeader("Stock Code").setAutoWidth(true);
+        grid.addColumn(Product::getDescription).setHeader("Description").setAutoWidth(true);
+        grid.addColumn(product -> product.getUnitPrice() != null ? product.getUnitPrice().toString() : "-")
+                .setHeader("Unit Price").setAutoWidth(true);
     }
 
     private void loadAllProducts() {
@@ -55,9 +55,7 @@ public class ProductView extends VerticalLayout {
         Product product = new Product();
         product.setStockCode(stockCodeField.getValue());
         product.setDescription(descriptionField.getValue());
-
-//        Set<Category> categories = new HashSet<>(categoryBox.getSelectedItems());
-//        product.setCategories(categories);
+        product.setUnitPrice(BigDecimal.valueOf(unitPriceField.getValue() != null ? unitPriceField.getValue() : 0.0));
 
         productService.save(product);
         loadAllProducts();

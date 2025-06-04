@@ -42,4 +42,6 @@ public class CustomerServiceImpl implements GenericService <Customer, Long> {
         customerDao.delete(entity);
     }
 
+
+
 }

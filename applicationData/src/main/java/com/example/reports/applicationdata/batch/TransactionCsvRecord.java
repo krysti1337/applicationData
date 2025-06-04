@@ -15,7 +15,7 @@ public class TransactionCsvRecord {
     private String stockCode;
     private String description;
     private int quantity;
-    private String invoiceDate; // păstrăm ca String pentru a-l converti manual în procesor
+    private String invoiceDate; // pastram ca String pentru a-l converti manual in procesor
     private BigDecimal unitPrice;
     private String customerID;
     private String country;

@@ -22,8 +22,6 @@ public class MainView extends VerticalLayout {
                 new RouterLink("Transactions", TransactionGridView.class),
                 new RouterLink("Customers", CustomerView.class),
                 new RouterLink("Products", ProductView.class),
-//                new RouterLink("Categories", CategoryView.class),
-//                new RouterLink("Orders", OrderView.class),
                 new RouterLink("Export", TransactionExportView.class)
         ));
     }
