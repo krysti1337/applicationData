@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Route("/export-transactions")
-@Component
 public class TransactionExportView extends VerticalLayout {
 
     private final GenericService<Transaction, Long> transactionService;

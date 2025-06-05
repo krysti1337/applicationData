@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Route("/import")
-@Component
 public class CsvImportView extends VerticalLayout {
 
     private final JobLauncher jobLauncher;

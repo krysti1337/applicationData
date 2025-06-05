@@ -180,7 +180,7 @@ public class BatchConfig {
     }
 
 
-    //Tasklet
+    //Tasklet STEP and JOB
 
     @Bean
     public Step exportTransactionStep(JobRepository jobRepository, PlatformTransactionManager transactionManager, ExportTransactionTasklet tasklet) {

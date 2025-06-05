@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Route("/products")
-@Component
 public class ProductView extends VerticalLayout {
 
     private final GenericService<Product, String> productService;

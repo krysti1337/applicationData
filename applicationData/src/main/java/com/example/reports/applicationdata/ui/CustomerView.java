@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Route("/customers")
-@Component
 public class CustomerView extends VerticalLayout {
 
     private final GenericService<Customer, Long> customerService;
