@@ -51,4 +51,12 @@ public class CustomerDaoImpl implements GenericDao<Customer, Long>{
     public void delete(Customer entity) {
         entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
     }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }
