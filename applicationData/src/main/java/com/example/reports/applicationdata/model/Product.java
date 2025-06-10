@@ -32,4 +32,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Transaction> transactions;
+
+    public Product(String stockCode, String description, BigDecimal unitPrice) {
+    }
 }

@@ -26,4 +26,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
+    public Customer(String customerID, String country) {
+    }
 }

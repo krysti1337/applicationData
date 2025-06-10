@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -34,6 +35,13 @@ public class TransactionDaoImpl implements GenericDao<Transaction, Long>{
                                 "JOIN FETCH t.customer " +
                                 "JOIN FETCH t.product", Transaction.class)
                 .getResultList();
+    }
+
+    @Override
+    public void saveAll(Set<Transaction> entities) {
+        for (Transaction entity : entities) {
+            entityManager.persist(entity);
+        }
     }
 
     @Override

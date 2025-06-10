@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -32,6 +33,13 @@ public class ProductDaoImpl implements GenericDao<Product, String> {
         return entityManager.createQuery(
                         "SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.transactions", Product.class)
                 .getResultList();
+    }
+
+    @Override
+    public void saveAll(Set<Product> entities) {
+        for (Product entity : entities) {
+            entityManager.persist(entity);
+        }
     }
 
     @Override
