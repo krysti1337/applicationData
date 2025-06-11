@@ -33,7 +33,8 @@ public class ProductServiceImpl implements GenericService<Product, String> {
     }
 
     @Override
-    public void update(Product entity) {
+    public void update(Product entity)
+    {
         productDao.update(entity);
     }
 
