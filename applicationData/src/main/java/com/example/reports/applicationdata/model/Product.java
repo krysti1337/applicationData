@@ -32,7 +32,7 @@ public class Product {
 //    private Set<Category> categories;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "product-transaction")
     private List<Transaction> transactions;
 
     public Product(String stockCode, String description, BigDecimal unitPrice) {

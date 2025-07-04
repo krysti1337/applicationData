@@ -2,30 +2,27 @@ package com.example.reports.applicationdata.ui;
 
 import com.example.reports.applicationdata.model.Customer;
 import com.example.reports.applicationdata.model.Profile;
-import com.example.reports.applicationdata.service.GenericService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Route("/customers")
 public class CustomerView extends VerticalLayout {
 
-    private final GenericService<Customer, Long> customerService;
+    private final RestTemplate restTemplate = new RestTemplate();
     private final Grid<Customer> grid = new Grid<>(Customer.class, false); // explicit fără reflecție automată
     private final TextField searchField = new TextField("Search by Country");
     private final TextField idField = new TextField("Customer ID");
     private final TextField countryField = new TextField("Country");
 
-    @Autowired
-    public CustomerView(GenericService<Customer, Long> customerService) {
-        this.customerService = customerService;
+    public CustomerView() {
 
         Button searchButton = new Button("Search", e -> searchCustomers());
         Button resetButton = new Button("Reset", e -> loadAllCustomers());
@@ -55,14 +52,15 @@ public class CustomerView extends VerticalLayout {
     }
 
     private void loadAllCustomers() {
-        List<Customer> customers = customerService.findAll();
-        grid.setItems(customers);
+        Customer[] customers = restTemplate.getForObject("http://localhost:8081/api/customer", Customer[].class);
+        grid.setItems(Arrays.asList(customers));
     }
 
     private void searchCustomers() {
-        String keyword = searchField.getValue();
-        List<Customer> filtered = customerService.findAll().stream()
-                .filter(c -> c.getCountry() != null && c.getCountry().toLowerCase().contains(keyword.toLowerCase()))
+        String keyword = searchField.getValue().toLowerCase();
+        Customer[] customers = restTemplate.getForObject("http://localhost:8081/api/customer", Customer[].class);
+        List<Customer> filtered = Arrays.stream(customers)
+                .filter(c -> c.getCountry() != null && c.getCountry().toLowerCase().contains(keyword))
                 .toList();
         grid.setItems(filtered);
     }
@@ -76,8 +74,7 @@ public class CustomerView extends VerticalLayout {
         Profile profile = new Profile();
         customer.setProfile(null);
 
-        customerService.save(customer);
+        restTemplate.postForObject("http://localhost:8081/api/customer/save", customer, Void.class);
         loadAllCustomers();
     }
 }
-

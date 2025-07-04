@@ -1,7 +1,6 @@
 package com.example.reports.applicationdata.ui;
 
 import com.example.reports.applicationdata.model.Product;
-import com.example.reports.applicationdata.service.GenericService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -9,25 +8,23 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 @Route("/products")
 public class ProductView extends VerticalLayout {
 
-    private final GenericService<Product, String> productService;
+    private final RestTemplate restTemplate = new RestTemplate();
     private final Grid<Product> grid = new Grid<>(Product.class, false);
 
     private final TextField stockCodeField = new TextField("Stock Code");
     private final TextField descriptionField = new TextField("Description");
     private final NumberField unitPriceField = new NumberField("Unit Price");
 
-    @Autowired
-    public ProductView(GenericService<Product, String> productService) {
-        this.productService = productService;
+    public ProductView() {
 
         Button saveButton = new Button("Save", e -> saveProduct());
         FormLayout form = new FormLayout(stockCodeField, descriptionField, unitPriceField, saveButton);
@@ -46,8 +43,8 @@ public class ProductView extends VerticalLayout {
     }
 
     private void loadAllProducts() {
-        List<Product> products = productService.findAll();
-        grid.setItems(products);
+        Product[] products = restTemplate.getForObject("http://localhost:8081/api/product", Product[].class);
+        grid.setItems(Arrays.asList(products));
     }
 
     private void saveProduct() {
@@ -56,7 +53,7 @@ public class ProductView extends VerticalLayout {
         product.setDescription(descriptionField.getValue());
         product.setUnitPrice(BigDecimal.valueOf(unitPriceField.getValue() != null ? unitPriceField.getValue() : 0.0));
 
-        productService.save(product);
+        restTemplate.postForObject("http://localhost:8081/api/product/save", product, Void.class);
         loadAllProducts();
     }
 }

@@ -25,10 +25,10 @@ public class Transaction {
 //    private BigDecimal unitPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value = "product-transaction")
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value = "customer-transaction")
     private Customer customer;
 }

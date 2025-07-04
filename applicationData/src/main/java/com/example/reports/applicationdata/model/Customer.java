@@ -25,7 +25,7 @@ public class Customer {
     private Profile profile;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "customer-transaction")
     private List<Transaction> transactions;
 
     public Customer(String customerID, String country) {
