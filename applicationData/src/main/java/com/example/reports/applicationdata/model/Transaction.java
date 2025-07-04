@@ -1,5 +1,6 @@
 package com.example.reports.applicationdata.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +22,13 @@ public class Transaction {
     private String invoiceNo;
     private Integer quantity;
     private LocalDateTime invoiceDate;
-    private BigDecimal unitPrice;
+//    private BigDecimal unitPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Customer customer;
 }

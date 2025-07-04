@@ -2,9 +2,7 @@ package com.example.reports.applicationdata.batch;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-import java.math.BigDecimal;
 
 @Data
 public class TransactionCsvRecord {

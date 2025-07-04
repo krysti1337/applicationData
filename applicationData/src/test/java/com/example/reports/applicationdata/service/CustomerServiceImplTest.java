@@ -25,7 +25,7 @@ public class CustomerServiceImplTest {
     private CustomerServiceImpl customerService;
 
     @Test
-    public void testSave(){
+    public void testSaveCustomer(){
 
         Customer customer = new Customer();
         customer.setCustomerId(1L);
@@ -53,7 +53,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testFindAll(){
+    public void testFindAllCustomers(){
         List<Customer> customers = List.of(
                 new Customer() {{
                     setCustomerId(1L);
@@ -78,11 +78,13 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdateCustomer(){
         Customer customer = new Customer();
         customer.setCustomerId(3L);
         customer.setCountry("Spain");
+        customerService.save(customer);
 
+        customer.setCountry("Italy");
         customerService.update(customer);
 
         verify(customerDao).update(customer);

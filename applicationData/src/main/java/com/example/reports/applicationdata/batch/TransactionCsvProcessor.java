@@ -41,7 +41,7 @@ public class TransactionCsvProcessor implements ItemProcessor<TransactionCsvReco
         product.setDescription(record.getDescription());
         product.setUnitPrice(record.getUnitPrice());
 
-        // Adăugăm în colecții pentru tasklet (dacă e folosit)
+        // Adaugam in colectie pentru tasklet
         customers.add(customer);
         products.add(product);
 

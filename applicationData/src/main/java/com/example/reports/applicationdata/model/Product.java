@@ -1,5 +1,6 @@
 package com.example.reports.applicationdata.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class Product {
 //    private Set<Category> categories;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Transaction> transactions;
 
     public Product(String stockCode, String description, BigDecimal unitPrice) {

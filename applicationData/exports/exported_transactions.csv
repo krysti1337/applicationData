@@ -1,0 +1,2 @@
+InvoiceNo,Quantity,InvoiceDate,CustomerID,Country,StockCode,Description,UnitPrice
+INV-001,3,2025-06-01T10:30,100,Italy,10001,Product Export,150.00

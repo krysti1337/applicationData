@@ -1,6 +1,7 @@
 package com.example.reports.applicationdata.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Customer {
     private Profile profile;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Transaction> transactions;
 
     public Customer(String customerID, String country) {

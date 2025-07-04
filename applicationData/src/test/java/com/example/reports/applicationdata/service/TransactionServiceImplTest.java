@@ -60,13 +60,13 @@ public class TransactionServiceImplTest {
                     setId(1L);
                     setInvoiceNo("INV-001");
                     setInvoiceDate(LocalDateTime.now());
-                    setUnitPrice(new BigDecimal("100.00"));
+//                    setUnitPrice(new BigDecimal("100.00"));
                 }},
                 new Transaction(){{
                     setId(2L);
                     setInvoiceNo("INV-004");
                     setInvoiceDate(LocalDateTime.now());
-                    setUnitPrice(new BigDecimal("200.00"));
+//                    setUnitPrice(new BigDecimal("200.00"));
                 }}
         );
 

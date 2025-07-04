@@ -45,7 +45,7 @@ public class TransactionDaoImplTest {
         transaction.setInvoiceNo("INV-001");
         transaction.setQuantity(2);
         transaction.setInvoiceDate(LocalDateTime.now());
-        transaction.setUnitPrice(new BigDecimal("999.99"));
+//        transaction.setUnitPrice(new BigDecimal("999.99"));
         transaction.setCustomer(customer);
         transaction.setProduct(product);
 
@@ -56,7 +56,7 @@ public class TransactionDaoImplTest {
         assertNotNull(found);
         assertEquals("INV-001", found.getInvoiceNo());
         assertEquals(2, found.getQuantity());
-        assertEquals(new BigDecimal("999.99"), found.getUnitPrice());
+//        assertEquals(new BigDecimal("999.99"), found.getUnitPrice());
         assertEquals(customer, found.getCustomer());
         assertEquals(product, found.getProduct());
     }
@@ -77,7 +77,7 @@ public class TransactionDaoImplTest {
         transaction.setInvoiceNo("INV-001");
         transaction.setQuantity(1);
         transaction.setInvoiceDate(LocalDateTime.now());
-        transaction.setUnitPrice(new BigDecimal("150.99"));
+//        transaction.setUnitPrice(new BigDecimal("150.99"));
         transaction.setCustomer(customer);
         transaction.setProduct(product);
         entityManager.persist(transaction);
@@ -86,7 +86,7 @@ public class TransactionDaoImplTest {
         transaction2.setInvoiceNo("INV-002");
         transaction2.setQuantity(2);
         transaction2.setInvoiceDate(LocalDateTime.now());
-        transaction2.setUnitPrice(new BigDecimal("300.00"));
+//        transaction2.setUnitPrice(new BigDecimal("300.00"));
         transaction2.setCustomer(customer);
         transaction2.setProduct(product);
 
@@ -123,7 +123,7 @@ public class TransactionDaoImplTest {
         transaction.setInvoiceNo("INV-001");
         transaction.setQuantity(2);
         transaction.setInvoiceDate(LocalDateTime.now());
-        transaction.setUnitPrice(new BigDecimal("999.99"));
+//        transaction.setUnitPrice(new BigDecimal("999.99"));
         transaction.setCustomer(customer);
         transaction.setProduct(product);
         transactionDao.save(transaction);
@@ -158,7 +158,7 @@ public class TransactionDaoImplTest {
         transaction.setInvoiceNo("INV-001");
         transaction.setQuantity(2);
         transaction.setInvoiceDate(LocalDateTime.now());
-        transaction.setUnitPrice(new BigDecimal("999.99"));
+//        transaction.setUnitPrice(new BigDecimal("999.99"));
         transaction.setCustomer(customer);
         transaction.setProduct(product);
         transactionDao.save(transaction);
